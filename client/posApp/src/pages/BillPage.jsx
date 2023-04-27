@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import Header from "../components/header/Header"
 import { Table, Card, Button, Modal } from "antd"
-import CreateBill from "../components/cart/CreateBill"
+import PrintBill from "../components/bills/PrintBill"
 
-const CartPage = () => {
+const BillPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {
@@ -47,6 +47,7 @@ const CartPage = () => {
     <>
       <Header />
       <div className="px-6 ">
+        <h1 className="text-4xl font-bold text-center mb-4">Bills</h1>
         <Table
           dataSource={dataSource}
           columns={columns}
@@ -55,32 +56,20 @@ const CartPage = () => {
         />
         <div className="cart-total flex justify-end mt-4">
           <Card className="w-72">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>549.00₺</span>
-            </div>
-            <div className="flex justify-between my-2">
-              <span>Tax Total %8</span>
-              <span className="text-red-600">+43.92₺</span>
-            </div>
-            <div className="flex justify-between">
-              <b>Total</b>
-              <b>592.92₺</b>
-            </div>
             <Button
               className="mt-4 w-full"
               type="primary"
               size="large"
               onClick={() => setIsModalOpen(true)}
             >
-              Create Order
+              Print
             </Button>
           </Card>
         </div>
       </div>
-      <CreateBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <PrintBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </>
   )
 }
 
-export default CartPage
+export default BillPage

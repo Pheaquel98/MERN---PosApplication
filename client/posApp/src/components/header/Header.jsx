@@ -9,6 +9,7 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons"
 import { Badge, Input } from "antd"
+import { Link } from "react-router-dom"
 
 const Header = () => {
   return (
@@ -28,59 +29,59 @@ const Header = () => {
           />
         </div>
         <div className="menu-links flex justify-between items-center gap-7 md:static fixed z-50 bottom-0 md:w-auto w-screen md:bg-transparent bg-white left-0 md:border-t-0 border-t md:px-0 px-4">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
-          </a>
+          </Link>
           <Badge count={5} offset={[0, 6]} className="md:flex hidden">
-            <a
-              href="/"
+            <Link
+              to="/cart"
               className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
             >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Cart</span>
-            </a>
+            </Link>
           </Badge>
-          <a
-            href="/"
+          <Link
+            to="/bills"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Bills</span>
-          </a>
-          <a
-            href="/"
+          </Link>
+          <Link
+            to="/customers"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <UserOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Customers</span>
-          </a>
-          <a
-            href="/"
+          </Link>
+          <Link
+            to="/"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <LineChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Charts</span>
-          </a>
-          <a
+          </Link>
+          <Link
             href="/"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <LogoutOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Logout</span>
-          </a>
+          </Link>
         </div>
         <Badge count={5} offset={[0, 6]} className="md:hidden flex">
-          <a
-            href="/"
+          <Link
+            to="/cart"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
           >
             <ShoppingCartOutlined className="text-2xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
-          </a>
+          </Link>
         </Badge>
       </header>
     </div>
