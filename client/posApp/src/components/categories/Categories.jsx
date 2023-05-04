@@ -1,76 +1,43 @@
 import React, { useState } from "react"
-import { PlusOutlined } from "@ant-design/icons"
-import { Button, Form, Input, Modal, message } from "antd"
+import { PlusOutlined, EditOutlined } from "@ant-design/icons"
 import "./style.css"
+import Add from "./Add"
+import Edit from "./Edit"
 
-const Categories = () => {
+const Categories = ({ categories, setCategories }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [form] = Form.useForm()
-  const onFinish = (values) => {
-    try {
-      fetch("http://localhost:5000/api/categories/add-category", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      })
-      message.success("Category Added")
-      form.resetFields()
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   return (
     <ul className="flex md:flex-col gap-4 text-lg">
-      <li className="category-item">
-        <span>All</span>
-      </li>
-      <li className="category-item">
-        <span>All</span>
-      </li>
-      <li className="category-item">
-        <span>All</span>
-      </li>
-      <li className="category-item">
-        <span>All</span>
-      </li>
-      <li className="category-item">
-        <span>All</span>
-      </li>
-      <li className="category-item">
-        <span>All</span>
-      </li>
+      {categories.map((item) => (
+        <li className="category-item" key={item._id}>
+          <span>{item.title}</span>
+        </li>
+      ))}
       <li
         className="category-item !bg-purple-800 hover:opacity-90"
         onClick={() => setIsAddModalOpen(true)}
       >
         <PlusOutlined className="md:text-2xl" />
       </li>
-      <Modal
-        title="Add New Category"
-        open={isAddModalOpen}
-        onCancel={() => setIsAddModalOpen(false)}
-        footer={false}
+      <li
+        className="category-item !bg-orange-600 hover:opacity-90"
+        onClick={() => setIsEditModalOpen(true)}
       >
-        <Form layout="vertical" onFinish={onFinish} form={form}>
-          <Form.Item
-            name="title"
-            label="Add Category"
-            rules={[
-              {
-                required: true,
-                message: "Please fill empty fields!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item className="flex justify-end mb-0">
-            <Button type="primary" htmlType="submit">
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        <EditOutlined className="md:text-2xl" />
+      </li>
+      <Add
+        isAddModalOpen={isAddModalOpen}
+        setIsAddModalOpen={setIsAddModalOpen}
+        categories={categories}
+        setCategories={setCategories}
+      />
+      <Edit
+        isEditModalOpen={isEditModalOpen}
+        setIsEditModalOpen={setIsEditModalOpen}
+        categories={categories}
+        setCategories={setCategories}
+      />
     </ul>
   )
 }
