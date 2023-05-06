@@ -5,6 +5,7 @@ const cartSlice = createSlice({
   initialState: {
     cartItems: [],
     total: 0,
+    tax: 8,
   },
   reducers: {
     // action dediğimiz olay bu fonksiyonu çağırdığmızda gönderilen veriler.
@@ -19,9 +20,50 @@ const cartSlice = createSlice({
       } else {
         state.cartItems.push(action.payload) // cartitems'in içine actiondan aldığımız verileri push ediyoruz.
       }
+      state.total += action.payload.price
+    },
+
+    deleteCart: (state, action) => {
+      state.cartItems = state.cartItems.filter(
+        (item) => item._id !== action.payload._id
+      )
+      state.total -= action.payload.price * action.payload.quantity // tıkladığımız ürünün fiyatı ve sepette kaç adet varsa hepsini sil
+    },
+
+    increase: (state, action) => {
+      // sepetteki ürünün adedini arttırma işlemi
+      const cartItem = state.cartItems.find(
+        (item) => item._id === action.payload._id
+      )
+
+      cartItem.quantity = cartItem.quantity + 1
+      state.total += cartItem.price
+    },
+
+    decrease: (state, action) => {
+      // sepetteki ürünün adedini arttırma işlemi
+      const cartItem = state.cartItems.find(
+        (item) => item._id === action.payload._id
+      )
+
+      cartItem.quantity = cartItem.quantity - 1
+
+      if (cartItem.quantity === 0) {
+        // eğer ürünün adedi 0 a eşitse sepetten kaldır
+        state.cartItems = state.cartItems.filter(
+          (item) => item._id !== action.payload._id
+        )
+      }
+      state.total -= cartItem.price
+    },
+
+    reset: (state) => {
+      state.cartItems = []
+      state.total = 0
     },
   },
 })
 
-export const { addProduct } = cartSlice.actions // reducers'in içinde yazdıklarımız actions olarak geçiyor
+export const { addProduct, deleteCart, increase, decrease, reset } =
+  cartSlice.actions // reducers'in içinde yazdıklarımız actions olarak geçiyor
 export default cartSlice.reducer

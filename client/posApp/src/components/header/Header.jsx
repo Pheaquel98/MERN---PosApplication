@@ -33,19 +33,19 @@ const Header = () => {
         <div className="menu-links flex justify-between items-center gap-7 md:static fixed z-50 bottom-0 md:w-auto w-screen md:bg-transparent bg-white left-0 md:border-t-0 border-t md:px-0 px-4">
           <Link
             to="/"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
           <Badge
             count={cart.cartItems.length}
-            offset={[0, 6]}
+            offset={[0, 0]}
             className="md:flex hidden"
           >
             <Link
               to="/cart"
-              className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+              className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
             >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Cart</span>
@@ -53,28 +53,28 @@ const Header = () => {
           </Badge>
           <Link
             to="/bills"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Bills</span>
           </Link>
           <Link
             to="/customers"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >
             <UserOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Customers</span>
           </Link>
           <Link
             to="/charts"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >
             <LineChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Charts</span>
           </Link>
           <Link
             href="/"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >
             <LogoutOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Logout</span>
@@ -82,7 +82,7 @@ const Header = () => {
         </div>
         <Badge
           count={cart.cartItems.length}
-          offset={[0, 6]}
+          offset={[0, 0]}
           className="md:hidden flex"
         >
           <Link
