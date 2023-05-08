@@ -14,8 +14,16 @@ const Login = () => {
         body: JSON.stringify(values),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       })
+      const user = await response.json()
       if (response.status === 200) {
         // eğer status code 200 dönerse başarılı bir şekilde giriş yaptık demektir
+        localStorage.setItem(
+          "postUser",
+          JSON.stringify({
+            username: user.username,
+            email: user.email,
+          })
+        )
         message.success("Logined Successfully.")
         navigate("/")
       } else if (response.status === 404) {
@@ -28,6 +36,7 @@ const Login = () => {
       setLoading(false)
     } catch (error) {
       message.error("Something went Wrong.")
+      setLoading(false)
     }
   }
   return (

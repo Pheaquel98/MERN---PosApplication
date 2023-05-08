@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import CartPage from "./pages/CartPage"
 import BillPage from "./pages/BillPage"
@@ -9,17 +8,50 @@ import Login from "./pages/auth/Login"
 import ProductPage from "./pages/ProductPage"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/bills" element={<BillPage />} />
-          <Route path="/customers" element={<CustomerPage />} />
-          <Route path="/products" element={<ProductPage />} />
+          <Route
+            path="/"
+            element={
+              <RouteControl>
+                <HomePage />
+              </RouteControl>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <RouteControl>
+                <CartPage />
+              </RouteControl>
+            }
+          />
+          <Route
+            path="/bills"
+            element={
+              <RouteControl>
+                <BillPage />
+              </RouteControl>
+            }
+          />
+          <Route
+            path="/customers"
+            element={
+              <RouteControl>
+                <CustomerPage />
+              </RouteControl>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <RouteControl>
+                <ProductPage />
+              </RouteControl>
+            }
+          />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
@@ -29,3 +61,12 @@ function App() {
 }
 
 export default App
+
+export const RouteControl = ({ children }) => {
+  // eğer daha önceden bir localde bir kullanıcı girişi olmadıysa login sayfasına yönlendiriyor
+  if (localStorage.getItem("postUser")) {
+    return children
+  } else {
+    return <Navigate to={"/login"} />
+  }
+}
