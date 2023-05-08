@@ -1,15 +1,47 @@
-import { Button, Form, Input, Carousel, Checkbox } from "antd"
-import React from "react"
-import { Link } from "react-router-dom"
+import { Button, Form, Input, Carousel, Checkbox, message } from "antd"
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import AuthCarousel from "../../components/auth/AuthCarousel"
 
 const Login = () => {
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const onFinish = async (values) => {
+    setLoading(true)
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      })
+      if (response.status === 200) {
+        // eğer status code 200 dönerse başarılı bir şekilde giriş yaptık demektir
+        message.success("Logined Successfully.")
+        navigate("/")
+      } else if (response.status === 404) {
+        // eğer status code 404 dönerse kullanıcı bulunamadı demektir
+        message.error("User not Found.")
+      } else if (response.status === 403) {
+        // eğer status code 403 yanlış şifre demektir
+        message.error("Wrong Password!")
+      }
+      setLoading(false)
+    } catch (error) {
+      message.error("Something went Wrong.")
+    }
+  }
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={{
+              remember: false,
+            }}
+          >
             <Form.Item
               label="E-mail"
               name={"email"}
@@ -46,6 +78,7 @@ const Login = () => {
                 htmlType="submit"
                 className="w-full"
                 size="large"
+                loading={loading}
               >
                 Login
               </Button>

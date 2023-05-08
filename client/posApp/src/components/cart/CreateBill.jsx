@@ -1,9 +1,40 @@
 import React from "react"
-import { Form, Input, Modal, Select, Card, Button } from "antd"
+import { Form, Input, Modal, Select, Card, Button, message } from "antd"
+import { useSelector, useDispatch } from "react-redux"
+import { reset } from "../../redux/cartSlice"
+import { useNavigate } from "react-router-dom"
 
 const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values)
+  const cart = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const onFinish = async (values) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/bills/add-bills",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ...values,
+            cartItems: cart.cartItems,
+            subTotal: cart.total,
+            tax: ((cart.total * cart.tax) / 100).toFixed(2),
+            totalAmount: (cart.total + (cart.total * cart.tax) / 100).toFixed(
+              2
+            ),
+          }),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      )
+      if (response.status === 200) {
+        message.success("Bill Created Successfully.")
+        dispatch(reset())
+        navigate("/bills")
+      }
+    } catch (error) {
+      message.error("Something went Wrong.")
+    }
   }
   return (
     <div>
@@ -12,9 +43,8 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={false}
-        onFinish={onFinish}
       >
-        <Form layout={"vertical"}>
+        <Form layout={"vertical"} onFinish={onFinish}>
           <Form.Item
             label="Customer Name"
             name={"customerName"}
@@ -24,7 +54,7 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
           </Form.Item>
           <Form.Item
             label="Phone Number"
-            name={"phoneNumber"}
+            name={"customerPhoneNumber"}
             rules={[{ required: true, message: "Phone number field empty!" }]}
           >
             <Input placeholder="Enter phone number" />
@@ -45,23 +75,30 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
           <Card>
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>549.00₺</span>
+              <span>
+                {cart.total.toFixed(2) > 0 ? cart.total.toFixed(2) : 0}₺
+              </span>
             </div>
             <div className="flex justify-between my-2">
               <span>Tax Total %8</span>
-              <span className="text-red-600">+43.92₺</span>
+              <span className="text-red-600">
+                {(cart.total * cart.tax) / 100 > 0
+                  ? `+${((cart.total * cart.tax) / 100).toFixed(2)}`
+                  : 0}
+                ₺
+              </span>
             </div>
             <div className="flex justify-between">
               <b>Total</b>
-              <b>592.92₺</b>
+              <b>
+                {cart.total + (cart.total * cart.tax) / 100 > 0
+                  ? (cart.total + (cart.total * cart.tax) / 100).toFixed(2)
+                  : 0}
+                ₺
+              </b>
             </div>
             <div className="flex justify-end">
-              <Button
-                className="mt-4"
-                type="primary"
-                onClick={() => setIsModalOpen(true)}
-                htmlType="submit"
-              >
+              <Button className="mt-4" type="primary" htmlType="submit">
                 Create Order
               </Button>
             </div>

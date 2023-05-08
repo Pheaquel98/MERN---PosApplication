@@ -11,10 +11,6 @@ const CartPage = () => {
   const cart = useSelector((state) => state.cart)
   const dispatch = useDispatch()
 
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-
   const columns = [
     {
       title: "Product Image",
@@ -118,6 +114,10 @@ const CartPage = () => {
           columns={columns}
           bordered
           pagination={false}
+          scroll={{
+            x: 1200,
+            y: 300,
+          }}
         />
         <div className="cart-total flex justify-end mt-4">
           <Card className="w-72">
@@ -150,6 +150,7 @@ const CartPage = () => {
               type="primary"
               size="large"
               onClick={() => setIsModalOpen(true)}
+              disabled={cart.cartItems.length === 0 ? true : false}
             >
               Create Order
             </Button>

@@ -66,13 +66,6 @@ const Header = () => {
             <span className="md:text-xs text-[10px]">Customers</span>
           </Link>
           <Link
-            to="/charts"
-            className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
-          >
-            <LineChartOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Charts</span>
-          </Link>
-          <Link
             href="/"
             className="menu-link flex flex-col hover:text-[#40a9ff] transition-all gap-y-1"
           >

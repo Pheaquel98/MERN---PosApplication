@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const logger = require("morgan")
 const app = express()
 const cors = require("cors")
 const port = 5000
@@ -27,6 +28,7 @@ const connect = async () => {
 // Middlewares
 app.use(express.json())
 app.use(cors())
+app.use(logger("dev"))
 
 app.use("/api/categories", categoryRoute)
 app.use("/api/products", productRoute)
