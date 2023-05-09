@@ -4,7 +4,7 @@ const dotenv = require("dotenv")
 const logger = require("morgan")
 const app = express()
 const cors = require("cors")
-const port = 5000
+const port = process.env.PORT || 5000
 
 // Routes
 
