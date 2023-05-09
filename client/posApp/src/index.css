@@ -32,3 +32,11 @@ body {
     display: none;
   }
 }
+
+.menu-link.active {
+  @apply !text-[#40a9ff];
+}
+
+.menu-link {
+  @apply flex flex-col hover:text-[#40a9ff] transition-all gap-y-1;
+}

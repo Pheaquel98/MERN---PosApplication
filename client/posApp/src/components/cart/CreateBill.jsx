@@ -12,7 +12,7 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   const onFinish = async (values) => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/bills/add-bills",
+        import.meta.env.VITE_REACT_APP_SERVER_URL + "/api/bills/add-bills",
         {
           method: "POST",
           body: JSON.stringify({

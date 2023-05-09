@@ -9,11 +9,14 @@ const Login = () => {
   const onFinish = async (values) => {
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      })
+      const response = await fetch(
+        import.meta.env.VITE_REACT_APP_SERVER_URL + "/api/auth/login",
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      )
       const user = await response.json()
       if (response.status === 200) {
         // eğer status code 200 dönerse başarılı bir şekilde giriş yaptık demektir

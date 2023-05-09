@@ -11,11 +11,14 @@ const Add = ({
   const [form] = Form.useForm()
   const onFinish = (values) => {
     try {
-      fetch("http://localhost:5000/api/products/add-product", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      })
+      fetch(
+        import.meta.env.VITE_REACT_APP_SERVER_URL + "/api/products/add-product",
+        {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      )
       message.success("Product Added")
       form.resetFields()
       setProducts([
